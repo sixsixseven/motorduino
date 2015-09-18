@@ -8,7 +8,7 @@ LiquidCrystal lcd(12,11,9,8,7,6,5,4,3,2);
 const int			mphPot = A0;
 const int			lBlinker = 13;
 const int			rBlinker = 10;
-const long			interval1k = 1000;
+const long			interval1k = 250;
 
 float		        gearRatio = 0.015455;
 
@@ -58,8 +58,10 @@ void loop() {
   //Blinkers
   lBlinkerState = digitalRead(lBlinker);
   rBlinkerState = digitalRead(rBlinker);
-  if (lBlinkerState == HIGH){currentBlinker = 1;}
-  if (rBlinkerState == HIGH){currentBlinker = 2;}
+  if (lBlinkerState == HIGH || rBlinkerState == HIGH){
+    if (lBlinkerState == HIGH) {currentBlinker = 1;}
+    else if (rBlinkerState == HIGH) {currentBlinker = 2;}
+  } else {currentBlinker = 0;}
   
   switch (currentBlinker){
     case 1:
@@ -73,17 +75,27 @@ void loop() {
   		lcd.print("<");
     } else {
 		lcd.setCursor(0,1);
-        lcd.print("");
+        lcd.print(" ");
     }
     break;
         
     case 2:
+    currentMillis = millis();
+      if (currentMillis - previousMillis >= interval1k) {
+    // save the last time the blinker blinked
+    previousMillis = currentMillis;
+
+    // if the LED is off turn it on and vice-versa:
     	lcd.setCursor(15,1);
-    	lcd.print(">");
+  		lcd.print(">");
+    } else {
+		lcd.setCursor(15,1);
+        lcd.print(" ");
+    }
     	break;
     
     default:
-    	
+    	currentBlinker = 0;
     	break;
   }
   
