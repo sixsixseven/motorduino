@@ -5,9 +5,10 @@
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(12,11,9,8,7,6,5,4,3,2);
 
-const int	      mphPot = A0;
-const int	      lBlinker = 13;
-const int	      rBlinker = 10;
+const int			mphPot = A0;
+const int			lBlinker = 13;
+const int			rBlinker = 10;
+const long			interval1k = 1000;
 
 float		        gearRatio = 0.015455;
 
@@ -18,8 +19,10 @@ int			        blinkerLastVal = 0;
 int			        lBlinkerState = 0;
 int			        rBlinkerState = 0;
 int			        currentBlinker = 0;
+int					interval = 0;
 
-unsigned long		blinkerCounter = 0;
+unsigned long		currentMillis = 0;
+unsigned long		previousMillis = 0;
 
 
 void setup() {
@@ -59,11 +62,21 @@ void loop() {
   if (rBlinkerState == HIGH){currentBlinker = 2;}
   
   switch (currentBlinker){
-    case 1: 
+    case 1:
+    currentMillis = millis();
+      if (currentMillis - previousMillis >= interval1k) {
+    // save the last time the blinker blinked
+    previousMillis = currentMillis;
+
+    // if the LED is off turn it on and vice-versa:
     	lcd.setCursor(0,1);
   		lcd.print("<");
-  		break;
-    //Need to make a millis interval counter like from Tut: "Blink w/o Delay". https://www.arduino.cc/en/Tutorial/BlinkWithoutDelay
+    } else {
+		lcd.setCursor(0,1);
+        lcd.print("");
+    }
+    break;
+        
     case 2:
     	lcd.setCursor(15,1);
     	lcd.print(">");
@@ -75,7 +88,6 @@ void loop() {
   }
   
 }
-
 
 
 
