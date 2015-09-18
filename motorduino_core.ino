@@ -5,19 +5,19 @@
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(12,11,9,8,7,6,5,4,3,2);
 
-const int	mphPot = A0;
-const int	lBlinker = 13;
-const int	rBlinker = 10;
+const int	      mphPot = A0;
+const int	      lBlinker = 13;
+const int	      rBlinker = 10;
 
-float		gearRatio = 0.015455;
+float		        gearRatio = 0.015455;
 
-int			mph = 0;
-int			rpm = 0;
-int			mphPotValue = 0;
-int			blinkerLastVal = 0;
-int			lBlinkerState = 0;
-int			rBlinkerState = 0;
-int			currentBlinker = 0;
+int			        mph = 0;
+int			        rpm = 0;
+int			        mphPotValue = 0;
+int			        blinkerLastVal = 0;
+int			        lBlinkerState = 0;
+int			        rBlinkerState = 0;
+int			        currentBlinker = 0;
 
 unsigned long		blinkerCounter = 0;
 
