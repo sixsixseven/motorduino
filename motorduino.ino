@@ -32,12 +32,13 @@ void setup() {
   
   // set up the LCD's number of columns and rows: (123d.circuits.io only?)
   lcd.begin(16,2);
+  lcd.clear();
   
   //Place MPH and RPM on the screen.
-  lcd.setCursor(10,0);
-  lcd.print("mph");
-  lcd.setCursor(10,1);
-  lcd.print("rpm");
+//  lcd.setCursor(10,0);
+//  lcd.print("mph");
+//  lcd.setCursor(10,1);
+//  lcd.print("rpm");
 }
 
 
@@ -49,11 +50,13 @@ void loop() {
   mph = map(mphPotValue,0,1023,0,85);
   lcd.setCursor(8,0);
   lcd.print(mph);
+  lcd.print(" mph");
     
   //RPM Logic
   lcd.setCursor(6,1);
   rpm = mph / gearRatio;
   lcd.print(rpm);
+  lcd.print(" rpm");
   
   //Blinkers
   lBlinkerState = digitalRead(lBlinker);
